@@ -21,7 +21,7 @@ $csvData = getCsvData($file);
 //print_r($csvData);
 
 //$sv = count($csvData);
-function getMakers(){
+function getMakers($csvData){
     $header = $csvData[0];
     $makerKey = array_search('make',$header);
     //$modelKey = array_search('model',$header);
@@ -44,14 +44,30 @@ function getMakers(){
             $maker = $data[$makerKey];
             $makers[] = $maker;
         }
-        /*if ($model != $data[$modelKey]) {
+        /*
+        if ($model != $data[$modelKey]) {
             $model = $data[$modelKey ];
             $result[$maker][] = $model;
-        }*/
+        }
+        */
     }
     return $makers;
 }
-print_r($makers);
 
-$mysqli = new mysqli;
-?>
+$mysqli = new mysqli("localhost","root",null,"cars");
+
+//Check connection
+if($mysqli->connect_errno) {
+    echo "Failed to connect to MySql: " . $mysqli -> connect_error;
+    exit();
+}
+echo "connected\n";
+
+$makers = getMakers($csvData);
+$mysqli->query("TRUNCATE TABLE makers");
+
+foreach ($makers as $maker) {
+    $mysqli->query("INSERT INTO makers (name) VALUES ('$maker')");
+    echo "$maker\n";
+}
+$mysqli->close();
