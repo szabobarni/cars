@@ -64,10 +64,7 @@ if($mysqli->connect_errno) {
 echo "connected\n";
 
 $makers = getMakers($csvData);
-$mysqli->query("TRUNCATE TABLE makers");
 
-foreach ($makers as $maker) {
-    $mysqli->query("INSERT INTO makers (name) VALUES ('$maker')");
-    echo "$maker\n";
-}
+$result = insertMarkes($mysqli, $makers, true);
+
 $mysqli->close();
