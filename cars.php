@@ -78,7 +78,7 @@ foreach ($makers as $maker) {
     echo "$maker\n";
 }
 
-$makers = $makerDbTools->getAllMakers($mysqli);
+$makers = $makerDbTools->getAllMakers();
 $cnt = count($makers);
 echo "$cnt sor van\n";
 echo $cnt." sor van\n";
