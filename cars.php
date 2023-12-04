@@ -1,5 +1,6 @@
 <?php
 require_once("db-tools.php");
+require_once("db-tools-class.php");
 ini_set('memory_limit','-1');
 $array = [];
 
@@ -64,18 +65,20 @@ if($mysqli->connect_errno) {
 }
 echo "connected\n";
 
+$makersDbTool = new MakersDbTool();
+
 $makers = getMakers($csvData);
 
 $errors = [];
 foreach ($makers as $maker) {
-    $result = insertMarkes($mysqli, $makers, true);
+    $result = $makersDbTool->insertMakers($maker, true);
     if(!$result){
         $errors[] = $maker;
     }
     echo "$maker\n";
 }
 
-$makers = getAllMakers($mysqli);
+$makers = $makersDbTool->getAllMakers($mysqli);
 $cnt = count($makers);
 echo "$cnt sor van\n";
 echo $cnt."sor van\n";
