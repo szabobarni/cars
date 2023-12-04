@@ -1,4 +1,5 @@
 <?php
+require_once("db-tools.php");
 ini_set('memory_limit','-1');
 $array = [];
 
@@ -65,6 +66,19 @@ echo "connected\n";
 
 $makers = getMakers($csvData);
 
-$result = insertMarkes($mysqli, $makers, true);
+$errors = [];
+foreach ($makers as $maker) {
+    $result = insertMarkes($mysqli, $makers, true);
+    if(!$result){
+        $errors[] = $maker;
+    }
+    echo "$maker\n";
+}
+
+$makers = getAllMakers($mysqli);
+$cnt = count($makers);
+echo "$cnt sor van\n";
+echo $cnt."sor van\n";
+echo sprintf("%d sor van\n", $cnt);
 
 $mysqli->close();
