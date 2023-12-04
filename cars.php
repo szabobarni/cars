@@ -65,23 +65,23 @@ if($mysqli->connect_errno) {
 }
 echo "connected\n";
 
-$makersDbTool = new MakersDbTool();
+$makerDbTools = new MakerDbTools();
 
 $makers = getMakers($csvData);
 
 $errors = [];
 foreach ($makers as $maker) {
-    $result = $makersDbTool->insertMakers($maker, true);
+    $result = $makerDbTools->insertMakers($maker, true);
     if(!$result){
         $errors[] = $maker;
     }
     echo "$maker\n";
 }
 
-$makers = $makersDbTool->getAllMakers($mysqli);
+$makers = $makerDbTools->getAllMakers($mysqli);
 $cnt = count($makers);
 echo "$cnt sor van\n";
-echo $cnt."sor van\n";
+echo $cnt." sor van\n";
 echo sprintf("%d sor van\n", $cnt);
 
 $mysqli->close();
