@@ -13,10 +13,32 @@ function insertMakers($mysqli, $makers, $truncate = false){
 }
 
 function updateMaker($mysqli, $data){
-    $result = $mysqli->query("UPDATE makers SET {$data['name']}");
+    $makerName = $data['name'];
+
+    $result = $mysqli->query("UPDATE makers SET name=$makerName");
 
     if (!$result){
-        echo "Hiba történt a $maker beszúrása közben";
+        echo "Hiba történt a $makerName beszúrása közben";
     }
+    $maker = getMakerByName($mysqli, $makerName);
+    return $result;
+}
+
+function getMaker($mysqli, $id){
+    $result = $mysqli->query("SELECT * FROM makers WHERE id=$id");
+    $maker = $result->fetch_assoc();
+
+    return $maker;
+}
+
+function getMakerByName($mysqli, $name){
+    $result = $mysqli->query("SELECT * FROM makers WHERE name=$name");
+    $maker = $result->fetch_assoc();
+
+    return $maker;
+}
+
+function delMaker($mysqli, $id){
+    $result = $mysqli->query("DELETE makers WHERE id=$id");
     return $result;
 }
