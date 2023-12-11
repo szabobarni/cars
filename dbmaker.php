@@ -1,6 +1,6 @@
 <?php
 
-namespace cars;
+//namespace cars;
 
 require_once 'carsinterface.php';
 require_once 'DB.php';
@@ -46,14 +46,20 @@ class DBMaker extends DB implements CarsInterface
 
         return $this->get($id);
     }
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         $query = "DELETE FROM makers WHERE id = $id";
         return $this->mysqli->query($query);
     }
     public function getAbc(): array
     {
-        $query = "SELECT DISTINCT LEFT(name,1) as L FROM makers GROUP BY L";
-        return $this->mysqli->query->fetch_all(MYSQLI_ASSOC);
+        $query = "SELECT DISTINCT SUBSTRING(name, 1,1) ch FROM makers";
+        return $this->mysqli->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
+    public function getByFirstCh($ch)
+    {
+        $query = "SELECT * FROM makers WHERE name LIKE '$ch%' ORDER BY name";
+
+        return $this->mysqli->query($query)->fetch_all(MYSQLI_ASSOC);
     }
 }
