@@ -35,8 +35,11 @@
 
         if (isset($_POST['ch'])) {
             //var_dump($all);
-            echo'<table>
-            <thead>
+            $ch = $_POST['ch'];
+            $makers = $carMaker->getByFirstCh($ch);
+                echo '
+                    <table>
+                <thead>
                 <tr>
                     <th>#</th><th>Megnevezés</th><th>Művelet</th>
                 </tr>
@@ -53,27 +56,13 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
-            
-            ';
-            $ch = $_POST['ch'];
-            $makers = $carMaker->getByFirstCh($ch);
+            <tbody>';
             foreach ($makers as $maker) {
-                $id = $maker['id'];
-                $name = $maker['name'];
-                echo "<tr>
-                    <td>$id</td>
-                    <td>$name</td>
-                    <td>Mod / Del</td>
-                </tr>
-                ";
-            }
-            echo"<tfoot>
-            
-            </tfoot>
-            </table>
+                echo "<tr><td>{$maker['id']}</td><td>{$maker['name']}</td><td><button type='submit' id='modosit'><i class='fa fa-edit'></i></button><button type='submit' id='torol'><i class='fa fa-trash'></i></button></td></tr>
+              
+            </tbody>
             ";
+            }
         }
 
         
